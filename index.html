@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hostly Management Company — Your property, thoughtfully managed.</title>
+<meta name="description" content="Hostly manages short-term rentals, long-term homes, and event-friendly stays — with care from listing to payout.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0e2a47;
+    --navy-deep:#0a1f36;
+    --teal:#17a89a;
+    --teal-soft:#e6f5f3;
+    --coral:#e8705c;
+    --coral-soft:#fdeeea;
+    --ink:#132033;
+    --muted:#61707f;
+    --bg:#f6f8fa;
+    --surface:#ffffff;
+    --line:#e4e9ee;
+    --radius:14px;
+    --shadow:0 10px 30px rgba(14,42,71,.07);
+    --shadow-lg:0 24px 60px rgba(14,42,71,.14);
+    --wrap:1200px;
+  }
+
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:96px}
+  body{
+    margin:0;
+    background:var(--surface);
+    color:var(--ink);
+    font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3,h4{margin:0;color:var(--navy);letter-spacing:-.02em;line-height:1.12;font-weight:700}
+  p{margin:0}
+  ul{margin:0;padding:0;list-style:none}
+  :focus-visible{outline:3px solid var(--teal);outline-offset:2px;border-radius:4px}
+
+  .wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:24px}
+  .eyebrow{
+    font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:14px;
+  }
+  .eyebrow.on-dark{color:rgba(255,255,255,.6)}
+  .lead{color:var(--muted);font-size:16.5px}
+  section{scroll-margin-top:96px}
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;justify-content:center;
+    font-size:14.5px;font-weight:600;padding:13px 22px;border-radius:8px;
+    border:1px solid transparent;cursor:pointer;transition:.18s ease;font-family:inherit;
+  }
+  .btn-navy{background:var(--navy);color:#fff}
+  .btn-navy:hover{background:#123761;transform:translateY(-1px)}
+  .btn-ghost{background:#fff;color:var(--navy);border-color:var(--line)}
+  .btn-ghost:hover{border-color:var(--navy);transform:translateY(-1px)}
+  .btn-teal{background:var(--teal);color:#fff}
+  .btn-teal:hover{background:#13968a;transform:translateY(-1px)}
+  .btn-coral{background:var(--coral);color:#fff;width:100%;padding:15px 22px;font-size:15px}
+  .btn-coral:hover{background:#d9604c}
+  .btn-pill{border-radius:999px}
+
+  /* ---------- utility bar ---------- */
+  .utility{background:var(--navy-deep);color:rgba(255,255,255,.78);font-size:12.5px}
+  .utility .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:42px;flex-wrap:wrap}
+  .utility-left{display:flex;align-items:center;gap:26px;flex-wrap:wrap}
+  .utility-right{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+  .utility span{display:inline-flex;align-items:center;gap:8px}
+  .utility a:hover{color:#fff}
+  .dot{width:5px;height:5px;border-radius:50%;background:var(--teal);flex:none}
+
+  /* ---------- header ---------- */
+  .site-header{
+    position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);
+  }
+  .site-header .wrap{display:flex;align-items:center;gap:28px;min-height:74px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.14em;color:var(--navy);font-size:18px}
+  .brand-mark{
+    width:34px;height:34px;border-radius:9px;background:var(--navy);color:#fff;flex:none;
+    display:grid;place-items:center;font-size:15px;letter-spacing:0;
+  }
+  .nav{display:flex;align-items:center;gap:28px;margin-left:auto;font-size:14.5px;font-weight:500;color:#39485a}
+  .nav a{position:relative;padding:6px 0}
+  .nav a:hover{color:var(--navy)}
+  .nav a::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--navy);
+    transform:scaleX(0);transition:transform .18s ease;
+  }
+  .nav a:hover::after{transform:scaleX(1)}
+  .header-cta{margin-left:8px}
+  .menu-btn{
+    display:none;margin-left:auto;background:#fff;border:1px solid var(--line);border-radius:8px;
+    width:42px;height:42px;cursor:pointer;padding:0;
+  }
+  .menu-btn span{display:block;width:18px;height:2px;background:var(--navy);margin:4px auto;border-radius:2px}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;background:var(--bg);overflow:hidden}
+  .hero-grid{
+    position:relative;z-index:2;display:grid;
+    grid-template-columns:minmax(0,min(560px,47%));
+    align-items:center;min-height:560px;padding:78px 0 96px;
+  }
+  .hero h1{font-size:clamp(38px,5vw,60px);font-weight:800}
+  .hero h1 .accent{color:var(--teal);display:block}
+  .hero .lead{margin-top:20px;max-width:470px;font-size:17px}
+  .hero-actions{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+  .hero-checks{display:flex;gap:12px 26px;margin-top:32px;flex-wrap:wrap;font-size:14px;color:#39485a}
+  .hero-checks li{display:flex;align-items:center;gap:9px}
+  .check{
+    width:19px;height:19px;border-radius:50%;background:var(--teal-soft);color:var(--teal);
+    display:grid;place-items:center;font-size:11px;font-weight:800;flex:none;
+  }
+  /* full-bleed hero image that dissolves into the page on its left edge */
+  .hero-media{position:absolute;top:0;right:0;bottom:0;width:52%;z-index:1}
+  .hero-media img{width:100%;height:100%;object-fit:cover;object-position:center}
+  .hero-media::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      linear-gradient(90deg,#f6f8fa 0%,rgba(246,248,250,.98) 10%,rgba(246,248,250,.55) 32%,rgba(246,248,250,0) 62%),
+      linear-gradient(180deg,rgba(246,248,250,.85) 0%,rgba(246,248,250,0) 20%),
+      linear-gradient(0deg,rgba(246,248,250,.7) 0%,rgba(246,248,250,0) 16%);
+  }
+
+  /* ---------- filter card ---------- */
+  .finder-holder{background:linear-gradient(180deg,var(--bg) 50%,#fff 50%)}
+  .finder{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-lg);
+    padding:16px;display:grid;grid-template-columns:repeat(4,1fr) auto;gap:8px;align-items:end;
+    transform:translateY(-70px);position:relative;z-index:4;
+  }
+  .finder-field{padding:8px 14px;border-right:1px solid var(--line)}
+  .finder-field:nth-of-type(4){border-right:0}
+  .finder-field label{
+    display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:4px;
+  }
+  .finder-field label .ic{color:var(--teal);font-size:13px}
+  .finder-field input,.finder-field select{
+    width:100%;border:0;padding:2px 0;font-size:14.5px;font-family:inherit;color:var(--ink);
+    background:transparent;
+  }
+  .finder-field input::placeholder{color:#9aa7b4}
+  .finder .btn{height:48px;padding-inline:26px}
+
+  /* ---------- trust row ---------- */
+  .trust{padding:14px 0 76px}
+  .trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:26px}
+  .trust-item{display:flex;gap:14px;align-items:flex-start}
+  .trust-ic{
+    width:44px;height:44px;border-radius:12px;background:var(--teal-soft);color:var(--teal);
+    display:grid;place-items:center;flex:none;font-size:19px;
+  }
+  .trust-item b{display:block;color:var(--navy);font-size:15px}
+  .trust-item p{color:var(--muted);font-size:13.5px;line-height:1.5;margin-top:2px}
+
+  /* ---------- section heads ---------- */
+  .sec{padding:84px 0}
+  .sec-alt{background:var(--bg)}
+  .sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:44px}
+  .sec-head h2{font-size:clamp(28px,3.4vw,40px)}
+  .sec-head .lead{max-width:430px}
+
+  /* ---------- services ---------- */
+  .services{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .svc{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px 24px;
+    display:flex;flex-direction:column;transition:.2s ease;
+  }
+  .svc:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px);border-color:#d5dee6}
+  .svc-no{font-size:12px;font-weight:800;color:var(--teal);letter-spacing:.14em;margin-bottom:18px}
+  .svc h3{font-size:18.5px;margin-bottom:10px}
+  .svc p{color:var(--muted);font-size:14px;line-height:1.62;flex:1}
+  .more{
+    display:inline-flex;align-items:center;gap:6px;margin-top:20px;font-size:13.5px;font-weight:600;color:var(--navy);
+  }
+  .more:hover{color:var(--teal)}
+
+  /* ---------- stay-type cards ---------- */
+  .stays{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .stay{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:.2s ease;
+  }
+  .stay:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+  .stay-img{position:relative}
+  .stay-img img{height:220px;width:100%;object-fit:cover}
+  .badge{
+    position:absolute;top:14px;left:14px;background:rgba(255,255,255,.94);color:var(--navy);
+    font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+    padding:7px 12px;border-radius:6px;
+  }
+  .badge.teal{background:var(--teal);color:#fff}
+  .stay-body{padding:20px 22px 24px}
+  .stay-body h3{font-size:18px}
+  .stay-body p{color:var(--muted);font-size:14px;margin-top:8px;line-height:1.6}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
+  .chip{
+    font-size:12px;color:#42525f;background:var(--bg);border:1px solid var(--line);
+    padding:5px 10px;border-radius:6px;
+  }
+
+  /* ---------- event band ---------- */
+  .band{background:var(--navy);color:#fff;border-radius:20px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr}
+  .band img{height:100%;min-height:400px;width:100%;object-fit:cover}
+  .band-body{padding:52px 52px 52px 48px;align-self:center}
+  .band-body h2{color:#fff;font-size:clamp(27px,3.2vw,38px)}
+  .band-body p{color:rgba(255,255,255,.72);margin-top:18px;max-width:440px;font-size:15.5px}
+  .band-list{margin-top:30px;display:grid;gap:18px}
+  .band-list li{display:flex;gap:14px;align-items:flex-start}
+  .band-list .check{background:rgba(23,168,154,.22);color:#5fd8cb;width:24px;height:24px;font-size:12px;margin-top:2px}
+  .band-list b{display:block;font-size:15.5px}
+  .band-list p{margin-top:4px;font-size:13.5px;color:rgba(255,255,255,.66);max-width:360px}
+
+  /* ---------- owners ---------- */
+  .owners{display:grid;grid-template-columns:1fr 1.05fr;gap:64px;align-items:start}
+  .owners h2{font-size:clamp(28px,3.4vw,42px)}
+  .owners .lead{margin-top:20px}
+  .owner-side{
+    margin-top:30px;border-left:3px solid var(--coral);padding:6px 0 6px 18px;
+  }
+  .owner-side b{display:block;color:var(--navy);font-size:15px}
+  .owner-side span{color:var(--muted);font-size:13.5px}
+  .steps{display:grid;gap:4px}
+  .step{display:grid;grid-template-columns:auto 1fr;gap:22px;padding:24px 0;border-bottom:1px solid var(--line)}
+  .step:last-child{border-bottom:0}
+  .step-no{font-size:12px;font-weight:800;color:var(--coral);letter-spacing:.12em;padding-top:5px}
+  .step h3{font-size:19px}
+  .step p{color:var(--muted);font-size:14.5px;margin-top:8px}
+
+  /* ---------- forms ---------- */
+  .form-card{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    padding:30px;box-shadow:var(--shadow);
+  }
+  .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 20px}
+  .field{display:flex;flex-direction:column;gap:7px}
+  .field.full{grid-column:1/-1}
+  .field label{font-size:13px;font-weight:600;color:#39485a}
+  .field input,.field select,.field textarea{
+    font-family:inherit;font-size:14.5px;color:var(--ink);background:#fff;
+    border:1px solid var(--line);border-radius:8px;padding:12px 14px;width:100%;
+  }
+  .field textarea{resize:vertical;min-height:104px}
+  .field input::placeholder,.field textarea::placeholder{color:#9aa7b4}
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--teal);outline:none;box-shadow:0 0 0 3px rgba(23,168,154,.14)}
+  .form-note{margin-top:14px;font-size:12.5px;color:var(--muted);text-align:center}
+
+  /* ---------- tenants ---------- */
+  .tenants{display:grid;grid-template-columns:.85fr 1.15fr;gap:60px;align-items:start}
+  .tenants h2{font-size:clamp(28px,3.4vw,40px)}
+  .tenant-points{margin-top:28px;display:grid;gap:16px}
+  .tenant-points li{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;color:#39485a}
+  .tenant-points .check{margin-top:3px}
+  .helpbox{
+    margin-top:30px;background:var(--coral-soft);border:1px solid #f6d9d2;border-radius:12px;padding:18px 20px;
+  }
+  .helpbox b{color:var(--navy);font-size:14.5px}
+  .helpbox p{color:#7a6660;font-size:13.5px;margin-top:4px}
+  .helpbox a{color:var(--coral);font-weight:600}
+
+  /* ---------- neighborhoods ---------- */
+  .hoods{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+  .hood{border-radius:12px;overflow:hidden;position:relative;border:1px solid var(--line);background:#fff}
+  .hood img{height:150px;width:100%;object-fit:cover;transition:.3s ease}
+  .hood:hover img{transform:scale(1.05)}
+  .hood-body{padding:14px 16px 16px}
+  .hood-body b{display:block;color:var(--navy);font-size:14.5px}
+  .hood-body span{color:var(--muted);font-size:12.5px}
+
+  /* ---------- contact ---------- */
+  .contact-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:60px;align-items:start}
+  .contact h2{font-size:clamp(28px,3.4vw,40px)}
+  .direct{
+    margin-top:32px;border-left:3px solid var(--coral);padding:4px 0 4px 18px;
+  }
+  .direct small{font-size:12.5px;color:var(--muted);display:block}
+  .direct a{display:block;color:var(--navy);font-weight:600;font-size:15px;margin-top:2px}
+  .direct em{font-style:normal;font-size:11.5px;color:#9aa7b4}
+  .tabs{display:flex;gap:10px;margin-bottom:22px;flex-wrap:wrap}
+  .tab{
+    border:1px solid var(--line);background:#fff;color:#39485a;font-family:inherit;font-size:14px;font-weight:600;
+    padding:11px 24px;border-radius:8px;cursor:pointer;transition:.16s ease;
+  }
+  .tab:hover{border-color:var(--navy)}
+  .tab[aria-selected="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+
+  /* ---------- footer ---------- */
+  .site-footer{background:var(--navy);color:rgba(255,255,255,.66);padding:66px 0 0;font-size:14px}
+  .foot-grid{display:grid;grid-template-columns:1.5fr repeat(4,1fr);gap:40px}
+  .foot-brand .brand{color:#fff}
+  .foot-brand .brand-mark{background:rgba(255,255,255,.14)}
+  .foot-brand p{margin-top:16px;max-width:280px;line-height:1.65}
+  .foot-col h4{color:#fff;font-size:14.5px;margin-bottom:16px}
+  .foot-col li{margin-bottom:10px}
+  .foot-col a:hover{color:#fff}
+  .socials{display:flex;gap:10px;margin-top:22px}
+  .socials a{
+    width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.09);
+    display:grid;place-items:center;font-size:13px;color:#fff;transition:.18s ease;
+  }
+  .socials a:hover{background:var(--teal)}
+  .foot-bottom{
+    margin-top:52px;border-top:1px solid rgba(255,255,255,.12);padding:22px 0;
+    display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:13px;
+  }
+  .foot-bottom .links{display:flex;gap:22px}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:1080px){
+    .hoods{grid-template-columns:repeat(3,1fr)}
+    .foot-grid{grid-template-columns:1.4fr repeat(3,1fr)}
+    .foot-grid .foot-col:last-child{grid-column:span 3}
+  }
+  @media (max-width:960px){
+    .nav,.header-cta{display:none}
+    .nav.open{
+      display:flex;position:absolute;top:74px;left:0;right:0;background:#fff;flex-direction:column;
+      align-items:flex-start;gap:0;padding:10px 24px 20px;border-bottom:1px solid var(--line);box-shadow:var(--shadow);
+    }
+    .nav.open a{padding:12px 0;width:100%;border-bottom:1px solid var(--line)}
+    .menu-btn{display:block}
+    .hero-grid,.owners,.tenants,.contact-grid{grid-template-columns:1fr;gap:40px}
+    .hero-grid{min-height:0;padding:56px 0 40px}
+    .hero-media{position:relative;width:100%;inset:auto;border-radius:16px;overflow:hidden}
+    .hero-media img{height:340px}
+    .hero-media::after{
+      background:linear-gradient(180deg,rgba(246,248,250,0) 55%,rgba(246,248,250,.35) 100%);
+    }
+    .finder{grid-template-columns:repeat(2,1fr);transform:translateY(-24px)}
+    .finder-field{border-right:0;border-bottom:1px solid var(--line)}
+    .finder .btn{grid-column:1/-1;width:100%}
+    .services,.trust-grid{grid-template-columns:repeat(2,1fr)}
+    .stays{grid-template-columns:1fr}
+    .band{grid-template-columns:1fr}
+    .band img{min-height:260px}
+    .band-body{padding:38px 30px}
+    .sec-head{flex-direction:column;align-items:flex-start;gap:18px}
+  }
+  @media (max-width:640px){
+    .sec{padding:60px 0}
+    .utility .wrap{justify-content:center;text-align:center;padding-block:8px}
+    .utility-left span:nth-child(2){display:none}
+    .services,.trust-grid,.hoods,.finder,.field-grid,.foot-grid{grid-template-columns:1fr}
+    .foot-grid .foot-col:last-child{grid-column:auto}
+    .hero{padding-top:48px}
+    .hero-actions .btn{width:100%}
+    .form-card{padding:22px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ utility bar ============ -->
+<div class="utility">
+  <div class="wrap">
+    <div class="utility-left">
+      <span><i class="dot"></i>Short-term · Long-term · Event-friendly</span>
+      <span><i class="dot"></i>Owner reporting you can actually read</span>
+    </div>
+    <div class="utility-right">
+      <a href="tel:+18001234567">☏ (800) 123-4567</a>
+      <a href="mailto:hello@yourhostlydomain.com">✉ hello@yourhostlydomain.com</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ header ============ -->
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="brand-mark">H</span>HOSTLY</a>
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav" id="nav">
+      <a href="#services">Services</a>
+      <a href="#event-friendly">Event-Friendly</a>
+      <a href="#owners">For Owners</a>
+      <a href="#tenants">For Tenants</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-navy btn-pill header-cta" href="#contact">Get a free rental analysis</a>
+  </div>
+</header>
+
+<!-- ============ hero ============ -->
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Hostly Management Company</p>
+      <h1>Your property,<br>thoughtfully <span class="accent">managed.</span></h1>
+      <p class="lead">Short-term rentals, long-term homes, and event-friendly stays — managed with care from listing to payout.</p>
+      <div class="hero-actions">
+        <a class="btn btn-navy" href="#contact">Get a free rental analysis →</a>
+        <a class="btn btn-ghost" href="#services">Explore our services</a>
+      </div>
+      <ul class="hero-checks">
+        <li><i class="check">✓</i>Guest care 7 days</li>
+        <li><i class="check">✓</i>Clear owner reporting</li>
+        <li><i class="check">✓</i>Local vendor network</li>
+      </ul>
+    </div>
+    <div class="hero-media">
+      <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1100&q=80"
+           alt="A sunlit Spanish-style managed home with landscaped garden" width="1100" height="860" fetchpriority="high">
+    </div>
+  </div>
+</section>
+
+<!-- ============ finder card ============ -->
+<div class="finder-holder">
+  <div class="wrap">
+    <form class="finder" id="finderForm" data-done="Tell us more below ↓">
+      <div class="finder-field">
+        <label for="f-loc"><span class="ic">◎</span>Location</label>
+        <input id="f-loc" type="text" placeholder="City, neighborhood, or ZIP">
+      </div>
+      <div class="finder-field">
+        <label for="f-date"><span class="ic">▤</span>Move-in date</label>
+        <input id="f-date" type="text" placeholder="Select date" onfocus="this.type='date'" onblur="if(!this.value)this.type='text'">
+      </div>
+      <div class="finder-field">
+        <label for="f-type"><span class="ic">⌂</span>Stay type</label>
+        <select id="f-type">
+          <option>Any stay type</option>
+          <option>Short-term rental</option>
+          <option>Long-term lease</option>
+          <option>Event-friendly</option>
+        </select>
+      </div>
+      <div class="finder-field">
+        <label for="f-beds"><span class="ic">▭</span>Bedrooms</label>
+        <select id="f-beds">
+          <option>Any</option>
+          <option>1+</option>
+          <option>2+</option>
+          <option>3+</option>
+          <option>4+</option>
+        </select>
+      </div>
+      <button class="btn btn-navy" type="submit">Browse homes</button>
+    </form>
+  </div>
+</div>
+
+<!-- ============ trust row ============ -->
+<section class="trust">
+  <div class="wrap trust-grid">
+    <div class="trust-item">
+      <span class="trust-ic">⛨</span>
+      <div><b>Verified owners</b><p>Every home is reviewed before it goes live under Hostly.</p></div>
+    </div>
+    <div class="trust-item">
+      <span class="trust-ic">▤</span>
+      <div><b>Transparent reporting</b><p>Clear monthly updates on stays, costs, and payouts.</p></div>
+    </div>
+    <div class="trust-item">
+      <span class="trust-ic">☏</span>
+      <div><b>Support 7 days a week</b><p>One responsive point of contact for owners and guests.</p></div>
+    </div>
+    <div class="trust-item">
+      <span class="trust-ic">✽</span>
+      <div><b>Local vendor network</b><p>Trusted cleaning, maintenance, and event partners nearby.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ services ============ -->
+<section class="sec sec-alt" id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">What we manage</p>
+        <h2>Flexible service.<br>Consistent care.</h2>
+      </div>
+      <p class="lead">Hostly covers the full lifecycle of a managed home — from the first listing photo to the monthly owner statement.</p>
+    </div>
+    <div class="services">
+      <article class="svc">
+        <div class="svc-no">01</div>
+        <h3>Short-term rental management</h3>
+        <p>Listing strategy, guest communication, cleaning coordination, pricing support, and owner reporting.</p>
+        <a class="more" href="#contact">Learn more <span>↗</span></a>
+      </article>
+      <article class="svc">
+        <div class="svc-no">02</div>
+        <h3>Long-term property management</h3>
+        <p>Thoughtful tenant placement, rent coordination, maintenance oversight, and clear monthly updates.</p>
+        <a class="more" href="#contact">Learn more <span>↗</span></a>
+      </article>
+      <article class="svc">
+        <div class="svc-no">03</div>
+        <h3>Event-friendly properties</h3>
+        <p>Practical guidance for approved gatherings, vendor coordination, house rules, and property protection.</p>
+        <a class="more" href="#event-friendly">Learn more <span>↗</span></a>
+      </article>
+      <article class="svc">
+        <div class="svc-no">04</div>
+        <h3>Owner support</h3>
+        <p>One responsive point of contact with transparent communication and care tailored to your property.</p>
+        <a class="more" href="#owners">Learn more <span>↗</span></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ stay types ============ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">Every property has a purpose</p>
+        <h2>A management plan that fits the stay.</h2>
+      </div>
+      <p class="lead">From high-touch guest stays to stable long-term homes, Hostly adapts the details to how your property is most likely to perform.</p>
+    </div>
+    <div class="stays">
+      <article class="stay">
+        <div class="stay-img">
+          <span class="badge teal">Short-term rental</span>
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80"
+               alt="Bright modern living room prepared for short-term guests" width="900" height="600" loading="lazy">
+        </div>
+        <div class="stay-body">
+          <h3>High-touch guest stays</h3>
+          <p>Listing strategy, dynamic pricing support, and turnover coordination for homes that host often.</p>
+          <div class="chips"><span class="chip">Guest messaging</span><span class="chip">Cleaning turns</span><span class="chip">Pricing support</span></div>
+        </div>
+      </article>
+      <article class="stay">
+        <div class="stay-img">
+          <span class="badge">Long-term lease</span>
+          <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=900&q=80"
+               alt="Spanish-style home suited to a long-term lease" width="900" height="600" loading="lazy">
+        </div>
+        <div class="stay-body">
+          <h3>Stable resident homes</h3>
+          <p>Careful tenant placement, rent coordination, and maintenance oversight with clear monthly updates.</p>
+          <div class="chips"><span class="chip">Tenant screening</span><span class="chip">Rent coordination</span><span class="chip">Maintenance</span></div>
+        </div>
+      </article>
+      <article class="stay">
+        <div class="stay-img">
+          <span class="badge">Event-friendly</span>
+          <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=900&q=80"
+               alt="Outdoor garden terrace set up for a small approved gathering" width="900" height="600" loading="lazy">
+        </div>
+        <div class="stay-body">
+          <h3>Approved gatherings</h3>
+          <p>Eligible homes positioned for intimate events, with screening, house rules, and vendor coordination.</p>
+          <div class="chips"><span class="chip">Event screening</span><span class="chip">House rules</span><span class="chip">Vendor coordination</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ event-friendly band ============ -->
+<section class="sec sec-alt" id="event-friendly">
+  <div class="wrap">
+    <div class="band">
+      <img src="https://images.unsplash.com/photo-1464146072230-91cabc968266?auto=format&fit=crop&w=1000&q=80"
+           alt="String-lit garden of a home approved for small gatherings" width="1000" height="800" loading="lazy">
+      <div class="band-body">
+        <p class="eyebrow on-dark">Event-friendly properties</p>
+        <h2>Welcoming spaces, clearly managed.</h2>
+        <p>Hostly helps owners responsibly position eligible homes for intimate gatherings and approved events — with clear expectations from inquiry through checkout.</p>
+        <ul class="band-list">
+          <li>
+            <i class="check">✓</i>
+            <div><b>Event screening</b><p>We review each event request against the property's limits and the owner's comfort level before anything is approved.</p></div>
+          </li>
+          <li>
+            <i class="check">✓</i>
+            <div><b>Rules &amp; protection</b><p>Written house rules, guest counts, quiet hours, and vendor requirements shared up front and enforced on site.</p></div>
+          </li>
+        </ul>
+        <a class="btn btn-teal" href="#contact" style="margin-top:32px">Ask about event-friendly hosting</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ for owners ============ -->
+<section class="sec" id="owners">
+  <div class="wrap owners">
+    <div>
+      <p class="eyebrow">For owners</p>
+      <h2>More clarity.<br>Less day-to-day friction.</h2>
+      <p class="lead">Your property stays personal to you. Our job is to make the management feel organized, responsive, and easy to understand.</p>
+      <div class="owner-side">
+        <b>Prefer to talk it through first?</b>
+        <span>Start with a free rental analysis — no commitment.</span>
+      </div>
+      <a class="btn btn-navy" href="#contact" style="margin-top:26px">Get a free rental analysis →</a>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-no">01</div>
+        <div>
+          <h3>Understand the property</h3>
+          <p>We start with your home, market, ideal guest or tenant, and financial goals.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-no">02</div>
+        <div>
+          <h3>Build the right plan</h3>
+          <p>You receive a practical management approach tailored to the property — not a one-size-fits-all package.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-no">03</div>
+        <div>
+          <h3>Manage the details</h3>
+          <p>Hostly coordinates the recurring parts while keeping communication and owner reporting clear.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ for tenants ============ -->
+<section class="sec sec-alt" id="tenants">
+  <div class="wrap tenants">
+    <div>
+      <p class="eyebrow">Looking for a place</p>
+      <h2>Tell us what you're looking for.</h2>
+      <p class="lead">Not every Hostly home is listed publicly. Share what you need — the area, the timing, the budget — and the team will point you to the properties that actually fit.</p>
+      <ul class="tenant-points">
+        <li><i class="check">✓</i>Short stays, long leases, or a home for an approved gathering</li>
+        <li><i class="check">✓</i>Straight answers on rules, deposits, and what's included</li>
+        <li><i class="check">✓</i>One point of contact from first question through move-in</li>
+      </ul>
+      <div class="helpbox">
+        <b>Any questions?</b>
+        <p>The Hostly team replies within one business day — or email us directly at
+          <a href="mailto:hello@yourhostlydomain.com">hello@yourhostlydomain.com</a>.</p>
+      </div>
+    </div>
+
+    <form class="form-card" data-done="Request sent — we'll be in touch">
+      <div class="field-grid">
+        <div class="field">
+          <label for="t-name">Your name</label>
+          <input id="t-name" name="name" type="text" placeholder="First and last name" required>
+        </div>
+        <div class="field">
+          <label for="t-email">Email</label>
+          <input id="t-email" name="email" type="email" placeholder="you@example.com" required>
+        </div>
+        <div class="field">
+          <label for="t-area">Preferred area</label>
+          <input id="t-area" name="area" type="text" placeholder="City or neighborhood">
+        </div>
+        <div class="field">
+          <label for="t-stay">Stay type</label>
+          <select id="t-stay" name="stay">
+            <option value="">Select one</option>
+            <option>Short-term rental</option>
+            <option>Long-term lease</option>
+            <option>Event-friendly stay</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="t-when">Move-in timing</label>
+          <input id="t-when" name="timing" type="text" placeholder="e.g. next month, flexible">
+        </div>
+        <div class="field">
+          <label for="t-budget">Budget range</label>
+          <input id="t-budget" name="budget" type="text" placeholder="Monthly or nightly">
+        </div>
+        <div class="field full">
+          <label for="t-notes">Anything else we should know?</label>
+          <textarea id="t-notes" name="notes" placeholder="Bedrooms, pets, parking, accessibility, questions for the team…"></textarea>
+        </div>
+        <div class="field full">
+          <button class="btn btn-coral" type="submit">Send my request</button>
+          <p class="form-note">Sample contact form — connect it to your own workflow before going live.</p>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ============ neighborhoods ============ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">Where we manage</p>
+        <h2>Explore by neighborhood.</h2>
+      </div>
+      <p class="lead">A sample of the areas Hostly covers. Swap these for your own service areas.</p>
+    </div>
+    <div class="hoods">
+      <a class="hood" href="#tenants">
+        <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=500&q=80" alt="Downtown skyline" width="500" height="380" loading="lazy">
+        <div class="hood-body"><b>Downtown</b><span>Homes managed by Hostly</span></div>
+      </a>
+      <a class="hood" href="#tenants">
+        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=500&q=80" alt="Hillside neighborhood" width="500" height="380" loading="lazy">
+        <div class="hood-body"><b>The Heights</b><span>Homes managed by Hostly</span></div>
+      </a>
+      <a class="hood" href="#tenants">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80" alt="Beachfront area" width="500" height="380" loading="lazy">
+        <div class="hood-body"><b>South Beach</b><span>Homes managed by Hostly</span></div>
+      </a>
+      <a class="hood" href="#tenants">
+        <img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=500&q=80" alt="Historic district street" width="500" height="380" loading="lazy">
+        <div class="hood-body"><b>Old Town</b><span>Homes managed by Hostly</span></div>
+      </a>
+      <a class="hood" href="#tenants">
+        <img src="https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=500&q=80" alt="Quiet suburban street" width="500" height="380" loading="lazy">
+        <div class="hood-body"><b>Garden District</b><span>Homes managed by Hostly</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ contact ============ -->
+<section class="sec sec-alt contact" id="contact">
+  <div class="wrap contact-grid">
+    <div>
+      <p class="eyebrow">Start a conversation</p>
+      <h2>Let's talk about your property.</h2>
+      <p class="lead" style="margin-top:20px">Choose a free rental analysis or send a general management question. The content below is ready to customize with your contact workflow.</p>
+      <div class="direct">
+        <small>Prefer direct contact?</small>
+        <a href="mailto:hello@yourhostlydomain.com">hello@yourhostlydomain.com</a>
+        <em>Editable email placeholder</em>
+      </div>
+    </div>
+
+    <div>
+      <div class="tabs" role="tablist" aria-label="Contact options">
+        <button class="tab" id="tab-analysis" type="button" role="tab" aria-selected="true" aria-controls="panel-analysis">Rental analysis</button>
+        <button class="tab" id="tab-question" type="button" role="tab" aria-selected="false" aria-controls="panel-question">Management question</button>
+      </div>
+
+      <form class="form-card" id="panel-analysis" role="tabpanel" aria-labelledby="tab-analysis" data-done="Thanks — your analysis request is in">
+        <div class="field-grid">
+          <div class="field">
+            <label for="a-name">Your name</label>
+            <input id="a-name" name="name" type="text" placeholder="First and last name" required>
+          </div>
+          <div class="field">
+            <label for="a-email">Email</label>
+            <input id="a-email" name="email" type="email" placeholder="you@example.com" required>
+          </div>
+          <div class="field">
+            <label for="a-ptype">Property type</label>
+            <select id="a-ptype" name="ptype">
+              <option value="">Select one</option>
+              <option>Short-term rental</option>
+              <option>Long-term rental</option>
+              <option>Event-friendly property</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="a-loc">Property location</label>
+            <input id="a-loc" name="location" type="text" placeholder="City or neighborhood">
+          </div>
+          <div class="field full">
+            <label for="a-help">What would you like help with?</label>
+            <textarea id="a-help" name="help" placeholder="Tell us about the property and what you're hoping to improve."></textarea>
+          </div>
+          <div class="field full">
+            <button class="btn btn-coral" type="submit">Request my free analysis</button>
+            <p class="form-note">Sample form only — no information is sent or stored.</p>
+          </div>
+        </div>
+      </form>
+
+      <form class="form-card" id="panel-question" role="tabpanel" aria-labelledby="tab-question" data-done="Thanks — your question is on its way" hidden>
+        <div class="field-grid">
+          <div class="field">
+            <label for="q-name">Your name</label>
+            <input id="q-name" name="name" type="text" placeholder="First and last name" required>
+          </div>
+          <div class="field">
+            <label for="q-email">Email</label>
+            <input id="q-email" name="email" type="email" placeholder="you@example.com" required>
+          </div>
+          <div class="field full">
+            <label for="q-topic">Topic</label>
+            <select id="q-topic" name="topic">
+              <option value="">Select one</option>
+              <option>Short-term rental management</option>
+              <option>Long-term property management</option>
+              <option>Event-friendly properties</option>
+              <option>Owner support</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="q-question">Your question</label>
+            <textarea id="q-question" name="question" placeholder="How can Hostly help?"></textarea>
+          </div>
+          <div class="field full">
+            <button class="btn btn-coral" type="submit">Send my question</button>
+            <p class="form-note">Sample form only — no information is sent or stored.</p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ footer ============ -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <span class="brand"><span class="brand-mark">H</span>HOSTLY</span>
+        <p>Thoughtful management for properties and the people behind them.</p>
+        <div class="socials">
+          <a href="#top" aria-label="Facebook">f</a>
+          <a href="#top" aria-label="Instagram">◎</a>
+          <a href="#top" aria-label="X">✕</a>
+          <a href="#top" aria-label="LinkedIn">in</a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Short-term rentals</a></li>
+          <li><a href="#services">Long-term homes</a></li>
+          <li><a href="#services">Owner support</a></li>
+          <li><a href="#services">Pricing support</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Event-Friendly</h4>
+        <ul>
+          <li><a href="#event-friendly">How it works</a></li>
+          <li><a href="#event-friendly">Event screening</a></li>
+          <li><a href="#event-friendly">House rules</a></li>
+          <li><a href="#event-friendly">Vendor coordination</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>For Owners</h4>
+        <ul>
+          <li><a href="#owners">Our approach</a></li>
+          <li><a href="#owners">Owner reporting</a></li>
+          <li><a href="#contact">Free rental analysis</a></li>
+          <li><a href="#tenants">For tenants</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@yourhostlydomain.com">hello@yourhostlydomain.com</a></li>
+          <li><a href="tel:+18001234567">(800) 123-4567</a></li>
+          <li><a href="#contact">Start a conversation</a></li>
+          <li><a href="#tenants">Tell us what you need</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year">2026</span> Hostly Management Company. Editable sample website content.</span>
+      <span class="links"><a href="#top">Privacy Policy</a><a href="#top">Terms of Service</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // mobile navigation
+  var menuBtn = document.getElementById('menuBtn');
+  var nav = document.getElementById('nav');
+  menuBtn.addEventListener('click', function () {
+    var open = nav.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', String(open));
+  });
+  nav.addEventListener('click', function (e) {
+    if (e.target.tagName === 'A') {
+      nav.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // contact tabs
+  var tabs = [
+    { tab: document.getElementById('tab-analysis'), panel: document.getElementById('panel-analysis') },
+    { tab: document.getElementById('tab-question'), panel: document.getElementById('panel-question') }
+  ];
+  tabs.forEach(function (item) {
+    item.tab.addEventListener('click', function () {
+      tabs.forEach(function (other) {
+        var active = other === item;
+        other.tab.setAttribute('aria-selected', String(active));
+        other.panel.hidden = !active;
+      });
+    });
+  });
+
+  // sample form feedback — nothing is submitted anywhere
+  document.querySelectorAll('form').forEach(function (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = form.querySelector('button[type="submit"], .btn');
+      if (!btn) return;
+      var label = btn.textContent;
+      btn.textContent = form.dataset.done || 'Thanks — we\'ll be in touch';
+      btn.disabled = true;
+      setTimeout(function () { btn.textContent = label; btn.disabled = false; }, 2600);
+    });
+  });
+
+  // the hero finder is a visual sample — send the visitor to the tenant form
+  document.getElementById('finderForm').addEventListener('submit', function () {
+    document.getElementById('tenants').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>

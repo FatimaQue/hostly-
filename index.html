@@ -5,26 +5,118 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hostly Management Company — Your property, thoughtfully managed.</title>
 <meta name="description" content="Hostly manages short-term rentals, long-term homes, and event-friendly stays — with care from listing to payout.">
+<meta name="color-scheme" content="light dark">
+<script>
+  /* Runs before first paint so the page never flashes the wrong theme.
+     Stored choice wins; otherwise fall back to the OS preference. */
+  (function () {
+    var theme = 'light';
+    try {
+      theme = localStorage.getItem('hostly-theme')
+        || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    } catch (e) { /* private mode / storage blocked — stay on light */ }
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+  /* ============================================================
+     LIGHT THEME (default). Every colour below has a dark
+     counterpart in the :root[data-theme="dark"] block that follows,
+     so no rule further down should hardcode a colour.
+     ============================================================ */
   :root{
-    --navy:#0e2a47;
-    --navy-deep:#0a1f36;
+    color-scheme:light;
+
+    /* brand accents */
     --teal:#17a89a;
-    --teal-soft:#e6f5f3;
     --coral:#e8705c;
-    --coral-soft:#fdeeea;
-    --ink:#132033;
-    --muted:#61707f;
-    --bg:#f6f8fa;
-    --surface:#ffffff;
+
+    /* surfaces */
+    --surface:#ffffff;        /* body / header ground */
+    --bg:#f6f8fa;             /* alt sections + hero ground */
+    --bg-rgb:246,248,250;     /* same colour, for the hero gradient fade */
+    --card:#ffffff;           /* cards, menu button, tabs */
+    --input-bg:#ffffff;
     --line:#e4e9ee;
+    --line-strong:#d5dee6;
+
+    /* text */
+    --heading:#0e2a47;
+    --ink:#132033;
+    --text-soft:#39485a;
+    --muted:#61707f;
+    --placeholder:#9aa7b4;
+
+    /* bands that stay dark in BOTH themes */
+    --utility-bg:#0a1f36;
+    --band-bg:#0e2a47;
+    --footer-bg:#0e2a47;
+
+    /* primary button */
+    --btn-primary-bg:#0e2a47;
+    --btn-primary-fg:#ffffff;
+    --btn-primary-hover:#123761;
+
+    /* accent washes */
+    --teal-soft:#e6f5f3;
+    --coral-soft:#fdeeea;
+    --coral-line:#f6d9d2;
+    --coral-text:#7a6660;
+    --badge-bg:rgba(255,255,255,.94);
+    --badge-text:#0e2a47;
+    --btn-accent-fg:#ffffff;  /* text on the teal / coral buttons */
+
     --radius:14px;
     --shadow:0 10px 30px rgba(14,42,71,.07);
     --shadow-lg:0 24px 60px rgba(14,42,71,.14);
     --wrap:1200px;
+  }
+
+  /* ============================================================
+     DARK THEME — only the colour tokens are redefined.
+     ============================================================ */
+  :root[data-theme="dark"]{
+    color-scheme:dark;
+
+    --teal:#2ec4b6;
+    --coral:#f08874;
+
+    --surface:#0f1a26;
+    --bg:#0b141e;
+    --bg-rgb:11,20,30;
+    --card:#16222f;
+    --input-bg:#0d1822;
+    --line:#243444;
+    --line-strong:#31445a;
+
+    --heading:#eaf1f8;
+    --ink:#dce6f0;
+    --text-soft:#b3c2d1;
+    --muted:#8a9aab;
+    --placeholder:#63748a;
+
+    --utility-bg:#070e16;
+    --band-bg:#152c46;
+    --footer-bg:#0a121b;
+
+    --btn-primary-bg:#1e3a5f;
+    --btn-primary-fg:#ffffff;
+    --btn-primary-hover:#2a4d78;
+
+    --teal-soft:rgba(46,196,182,.16);
+    --coral-soft:rgba(240,136,116,.12);
+    --coral-line:rgba(240,136,116,.28);
+    --coral-text:#d3a89e;
+    --badge-bg:rgba(11,20,30,.88);
+    --badge-text:#eaf1f8;
+    /* the dark theme brightens teal/coral, so flip this text dark to stay legible */
+    --btn-accent-fg:#08231f;
+
+    --shadow:0 10px 30px rgba(0,0,0,.45);
+    --shadow-lg:0 24px 60px rgba(0,0,0,.6);
   }
 
   *,*::before,*::after{box-sizing:border-box}
@@ -40,7 +132,7 @@
   }
   img{max-width:100%;display:block}
   a{color:inherit;text-decoration:none}
-  h1,h2,h3,h4{margin:0;color:var(--navy);letter-spacing:-.02em;line-height:1.12;font-weight:700}
+  h1,h2,h3,h4{margin:0;color:var(--heading);letter-spacing:-.02em;line-height:1.12;font-weight:700}
   p{margin:0}
   ul{margin:0;padding:0;list-style:none}
   :focus-visible{outline:3px solid var(--teal);outline-offset:2px;border-radius:4px}
@@ -60,18 +152,18 @@
     font-size:14.5px;font-weight:600;padding:13px 22px;border-radius:8px;
     border:1px solid transparent;cursor:pointer;transition:.18s ease;font-family:inherit;
   }
-  .btn-navy{background:var(--navy);color:#fff}
-  .btn-navy:hover{background:#123761;transform:translateY(-1px)}
-  .btn-ghost{background:#fff;color:var(--navy);border-color:var(--line)}
-  .btn-ghost:hover{border-color:var(--navy);transform:translateY(-1px)}
-  .btn-teal{background:var(--teal);color:#fff}
-  .btn-teal:hover{background:#13968a;transform:translateY(-1px)}
-  .btn-coral{background:var(--coral);color:#fff;width:100%;padding:15px 22px;font-size:15px}
-  .btn-coral:hover{background:#d9604c}
+  .btn-navy{background:var(--btn-primary-bg);color:var(--btn-primary-fg)}
+  .btn-navy:hover{background:var(--btn-primary-hover);transform:translateY(-1px)}
+  .btn-ghost{background:var(--card);color:var(--heading);border-color:var(--line)}
+  .btn-ghost:hover{border-color:var(--heading);transform:translateY(-1px)}
+  .btn-teal{background:var(--teal);color:var(--btn-accent-fg)}
+  .btn-teal:hover{filter:brightness(1.08);transform:translateY(-1px)}
+  .btn-coral{background:var(--coral);color:var(--btn-accent-fg);width:100%;padding:15px 22px;font-size:15px}
+  .btn-coral:hover{filter:brightness(1.06)}
   .btn-pill{border-radius:999px}
 
   /* ---------- utility bar ---------- */
-  .utility{background:var(--navy-deep);color:rgba(255,255,255,.78);font-size:12.5px}
+  .utility{background:var(--utility-bg);color:rgba(255,255,255,.78);font-size:12.5px}
   .utility .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:42px;flex-wrap:wrap}
   .utility-left{display:flex;align-items:center;gap:26px;flex-wrap:wrap}
   .utility-right{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
@@ -81,28 +173,41 @@
 
   /* ---------- header ---------- */
   .site-header{
-    position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);
+    position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--line);
   }
   .site-header .wrap{display:flex;align-items:center;gap:28px;min-height:74px}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.14em;color:var(--navy);font-size:18px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.14em;color:var(--heading);font-size:18px}
   .brand-mark{
-    width:34px;height:34px;border-radius:9px;background:var(--navy);color:#fff;flex:none;
+    width:34px;height:34px;border-radius:9px;background:var(--btn-primary-bg);color:var(--btn-primary-fg);flex:none;
     display:grid;place-items:center;font-size:15px;letter-spacing:0;
   }
-  .nav{display:flex;align-items:center;gap:28px;margin-left:auto;font-size:14.5px;font-weight:500;color:#39485a}
+  .nav{display:flex;align-items:center;gap:28px;margin-left:auto;font-size:14.5px;font-weight:500;color:var(--text-soft)}
   .nav a{position:relative;padding:6px 0}
-  .nav a:hover{color:var(--navy)}
+  .nav a:hover{color:var(--heading)}
   .nav a::after{
-    content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--navy);
+    content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--heading);
     transform:scaleX(0);transition:transform .18s ease;
   }
   .nav a:hover::after{transform:scaleX(1)}
   .header-cta{margin-left:8px}
+
+  /* ---------- theme toggle ---------- */
+  .theme-toggle{
+    flex:none;width:42px;height:42px;padding:0;cursor:pointer;
+    background:var(--card);border:1px solid var(--line);border-radius:10px;color:var(--heading);
+    display:grid;place-items:center;transition:.18s ease;
+  }
+  .theme-toggle:hover{border-color:var(--line-strong);color:var(--teal);transform:translateY(-1px)}
+  .theme-toggle svg{width:18px;height:18px;display:block}
+  .theme-toggle .ic-sun{display:none}
+  :root[data-theme="dark"] .theme-toggle .ic-sun{display:block}
+  :root[data-theme="dark"] .theme-toggle .ic-moon{display:none}
+
   .menu-btn{
-    display:none;margin-left:auto;background:#fff;border:1px solid var(--line);border-radius:8px;
+    display:none;background:var(--card);border:1px solid var(--line);border-radius:8px;
     width:42px;height:42px;cursor:pointer;padding:0;
   }
-  .menu-btn span{display:block;width:18px;height:2px;background:var(--navy);margin:4px auto;border-radius:2px}
+  .menu-btn span{display:block;width:18px;height:2px;background:var(--heading);margin:4px auto;border-radius:2px}
 
   /* ---------- hero ---------- */
   .hero{position:relative;background:var(--bg);overflow:hidden}
@@ -115,7 +220,7 @@
   .hero h1 .accent{color:var(--teal);display:block}
   .hero .lead{margin-top:20px;max-width:470px;font-size:17px}
   .hero-actions{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
-  .hero-checks{display:flex;gap:12px 26px;margin-top:32px;flex-wrap:wrap;font-size:14px;color:#39485a}
+  .hero-checks{display:flex;gap:12px 26px;margin-top:32px;flex-wrap:wrap;font-size:14px;color:var(--text-soft)}
   .hero-checks li{display:flex;align-items:center;gap:9px}
   .check{
     width:19px;height:19px;border-radius:50%;background:var(--teal-soft);color:var(--teal);
@@ -127,15 +232,15 @@
   .hero-media::after{
     content:"";position:absolute;inset:0;pointer-events:none;
     background:
-      linear-gradient(90deg,#f6f8fa 0%,rgba(246,248,250,.98) 10%,rgba(246,248,250,.55) 32%,rgba(246,248,250,0) 62%),
-      linear-gradient(180deg,rgba(246,248,250,.85) 0%,rgba(246,248,250,0) 20%),
-      linear-gradient(0deg,rgba(246,248,250,.7) 0%,rgba(246,248,250,0) 16%);
+      linear-gradient(90deg,rgb(var(--bg-rgb)) 0%,rgba(var(--bg-rgb),.98) 10%,rgba(var(--bg-rgb),.55) 32%,rgba(var(--bg-rgb),0) 62%),
+      linear-gradient(180deg,rgba(var(--bg-rgb),.85) 0%,rgba(var(--bg-rgb),0) 20%),
+      linear-gradient(0deg,rgba(var(--bg-rgb),.7) 0%,rgba(var(--bg-rgb),0) 16%);
   }
 
   /* ---------- filter card ---------- */
-  .finder-holder{background:linear-gradient(180deg,var(--bg) 50%,#fff 50%)}
+  .finder-holder{background:linear-gradient(180deg,var(--bg) 50%,var(--surface) 50%)}
   .finder{
-    background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-lg);
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-lg);
     padding:16px;display:grid;grid-template-columns:repeat(4,1fr) auto;gap:8px;align-items:end;
     transform:translateY(-70px);position:relative;z-index:4;
   }
@@ -150,7 +255,7 @@
     width:100%;border:0;padding:2px 0;font-size:14.5px;font-family:inherit;color:var(--ink);
     background:transparent;
   }
-  .finder-field input::placeholder{color:#9aa7b4}
+  .finder-field input::placeholder{color:var(--placeholder)}
   .finder .btn{height:48px;padding-inline:26px}
 
   /* ---------- trust row ---------- */
@@ -161,7 +266,7 @@
     width:44px;height:44px;border-radius:12px;background:var(--teal-soft);color:var(--teal);
     display:grid;place-items:center;flex:none;font-size:19px;
   }
-  .trust-item b{display:block;color:var(--navy);font-size:15px}
+  .trust-item b{display:block;color:var(--heading);font-size:15px}
   .trust-item p{color:var(--muted);font-size:13.5px;line-height:1.5;margin-top:2px}
 
   /* ---------- section heads ---------- */
@@ -174,43 +279,43 @@
   /* ---------- services ---------- */
   .services{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
   .svc{
-    background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px 24px;
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px 24px;
     display:flex;flex-direction:column;transition:.2s ease;
   }
-  .svc:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px);border-color:#d5dee6}
+  .svc:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px);border-color:var(--line-strong)}
   .svc-no{font-size:12px;font-weight:800;color:var(--teal);letter-spacing:.14em;margin-bottom:18px}
   .svc h3{font-size:18.5px;margin-bottom:10px}
   .svc p{color:var(--muted);font-size:14px;line-height:1.62;flex:1}
   .more{
-    display:inline-flex;align-items:center;gap:6px;margin-top:20px;font-size:13.5px;font-weight:600;color:var(--navy);
+    display:inline-flex;align-items:center;gap:6px;margin-top:20px;font-size:13.5px;font-weight:600;color:var(--heading);
   }
   .more:hover{color:var(--teal)}
 
   /* ---------- stay-type cards ---------- */
   .stays{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
   .stay{
-    background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:.2s ease;
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:.2s ease;
   }
   .stay:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
   .stay-img{position:relative}
   .stay-img img{height:220px;width:100%;object-fit:cover}
   .badge{
-    position:absolute;top:14px;left:14px;background:rgba(255,255,255,.94);color:var(--navy);
+    position:absolute;top:14px;left:14px;background:var(--badge-bg);color:var(--badge-text);
     font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
     padding:7px 12px;border-radius:6px;
   }
-  .badge.teal{background:var(--teal);color:#fff}
+  .badge.teal{background:var(--teal);color:var(--btn-accent-fg)}
   .stay-body{padding:20px 22px 24px}
   .stay-body h3{font-size:18px}
   .stay-body p{color:var(--muted);font-size:14px;margin-top:8px;line-height:1.6}
   .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
   .chip{
-    font-size:12px;color:#42525f;background:var(--bg);border:1px solid var(--line);
+    font-size:12px;color:var(--text-soft);background:var(--bg);border:1px solid var(--line);
     padding:5px 10px;border-radius:6px;
   }
 
   /* ---------- event band ---------- */
-  .band{background:var(--navy);color:#fff;border-radius:20px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr}
+  .band{background:var(--band-bg);color:#fff;border-radius:20px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr}
   .band img{height:100%;min-height:400px;width:100%;object-fit:cover}
   .band-body{padding:52px 52px 52px 48px;align-self:center}
   .band-body h2{color:#fff;font-size:clamp(27px,3.2vw,38px)}
@@ -228,7 +333,7 @@
   .owner-side{
     margin-top:30px;border-left:3px solid var(--coral);padding:6px 0 6px 18px;
   }
-  .owner-side b{display:block;color:var(--navy);font-size:15px}
+  .owner-side b{display:block;color:var(--heading);font-size:15px}
   .owner-side span{color:var(--muted);font-size:13.5px}
   .steps{display:grid;gap:4px}
   .step{display:grid;grid-template-columns:auto 1fr;gap:22px;padding:24px 0;border-bottom:1px solid var(--line)}
@@ -239,19 +344,19 @@
 
   /* ---------- forms ---------- */
   .form-card{
-    background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
     padding:30px;box-shadow:var(--shadow);
   }
   .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 20px}
   .field{display:flex;flex-direction:column;gap:7px}
   .field.full{grid-column:1/-1}
-  .field label{font-size:13px;font-weight:600;color:#39485a}
+  .field label{font-size:13px;font-weight:600;color:var(--text-soft)}
   .field input,.field select,.field textarea{
-    font-family:inherit;font-size:14.5px;color:var(--ink);background:#fff;
+    font-family:inherit;font-size:14.5px;color:var(--ink);background:var(--input-bg);
     border:1px solid var(--line);border-radius:8px;padding:12px 14px;width:100%;
   }
   .field textarea{resize:vertical;min-height:104px}
-  .field input::placeholder,.field textarea::placeholder{color:#9aa7b4}
+  .field input::placeholder,.field textarea::placeholder{color:var(--placeholder)}
   .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--teal);outline:none;box-shadow:0 0 0 3px rgba(23,168,154,.14)}
   .form-note{margin-top:14px;font-size:12.5px;color:var(--muted);text-align:center}
 
@@ -259,22 +364,22 @@
   .tenants{display:grid;grid-template-columns:.85fr 1.15fr;gap:60px;align-items:start}
   .tenants h2{font-size:clamp(28px,3.4vw,40px)}
   .tenant-points{margin-top:28px;display:grid;gap:16px}
-  .tenant-points li{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;color:#39485a}
+  .tenant-points li{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;color:var(--text-soft)}
   .tenant-points .check{margin-top:3px}
   .helpbox{
-    margin-top:30px;background:var(--coral-soft);border:1px solid #f6d9d2;border-radius:12px;padding:18px 20px;
+    margin-top:30px;background:var(--coral-soft);border:1px solid var(--coral-line);border-radius:12px;padding:18px 20px;
   }
-  .helpbox b{color:var(--navy);font-size:14.5px}
-  .helpbox p{color:#7a6660;font-size:13.5px;margin-top:4px}
+  .helpbox b{color:var(--heading);font-size:14.5px}
+  .helpbox p{color:var(--coral-text);font-size:13.5px;margin-top:4px}
   .helpbox a{color:var(--coral);font-weight:600}
 
   /* ---------- neighborhoods ---------- */
   .hoods{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
-  .hood{border-radius:12px;overflow:hidden;position:relative;border:1px solid var(--line);background:#fff}
+  .hood{border-radius:12px;overflow:hidden;position:relative;border:1px solid var(--line);background:var(--card)}
   .hood img{height:150px;width:100%;object-fit:cover;transition:.3s ease}
   .hood:hover img{transform:scale(1.05)}
   .hood-body{padding:14px 16px 16px}
-  .hood-body b{display:block;color:var(--navy);font-size:14.5px}
+  .hood-body b{display:block;color:var(--heading);font-size:14.5px}
   .hood-body span{color:var(--muted);font-size:12.5px}
 
   /* ---------- contact ---------- */
@@ -284,18 +389,18 @@
     margin-top:32px;border-left:3px solid var(--coral);padding:4px 0 4px 18px;
   }
   .direct small{font-size:12.5px;color:var(--muted);display:block}
-  .direct a{display:block;color:var(--navy);font-weight:600;font-size:15px;margin-top:2px}
-  .direct em{font-style:normal;font-size:11.5px;color:#9aa7b4}
+  .direct a{display:block;color:var(--heading);font-weight:600;font-size:15px;margin-top:2px}
+  .direct em{font-style:normal;font-size:11.5px;color:var(--placeholder)}
   .tabs{display:flex;gap:10px;margin-bottom:22px;flex-wrap:wrap}
   .tab{
-    border:1px solid var(--line);background:#fff;color:#39485a;font-family:inherit;font-size:14px;font-weight:600;
+    border:1px solid var(--line);background:var(--card);color:var(--text-soft);font-family:inherit;font-size:14px;font-weight:600;
     padding:11px 24px;border-radius:8px;cursor:pointer;transition:.16s ease;
   }
-  .tab:hover{border-color:var(--navy)}
-  .tab[aria-selected="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+  .tab:hover{border-color:var(--heading)}
+  .tab[aria-selected="true"]{background:var(--btn-primary-bg);border-color:var(--btn-primary-bg);color:var(--btn-primary-fg)}
 
   /* ---------- footer ---------- */
-  .site-footer{background:var(--navy);color:rgba(255,255,255,.66);padding:66px 0 0;font-size:14px}
+  .site-footer{background:var(--footer-bg);color:rgba(255,255,255,.66);padding:66px 0 0;font-size:14px}
   .foot-grid{display:grid;grid-template-columns:1.5fr repeat(4,1fr);gap:40px}
   .foot-brand .brand{color:#fff}
   .foot-brand .brand-mark{background:rgba(255,255,255,.14)}
@@ -315,6 +420,12 @@
   }
   .foot-bottom .links{display:flex;gap:22px}
 
+  /* photos are lit for a white page — take the glare off them in dark mode */
+  :root[data-theme="dark"] .hero-media img,
+  :root[data-theme="dark"] .stay-img img,
+  :root[data-theme="dark"] .hood img,
+  :root[data-theme="dark"] .band img{filter:brightness(.82) saturate(.95)}
+
   /* ---------- responsive ---------- */
   @media (max-width:1080px){
     .hoods{grid-template-columns:repeat(3,1fr)}
@@ -323,8 +434,10 @@
   }
   @media (max-width:960px){
     .nav,.header-cta{display:none}
+    .theme-toggle{margin-left:auto}
+    .site-header .wrap{gap:12px}
     .nav.open{
-      display:flex;position:absolute;top:74px;left:0;right:0;background:#fff;flex-direction:column;
+      display:flex;position:absolute;top:74px;left:0;right:0;background:var(--surface);flex-direction:column;
       align-items:flex-start;gap:0;padding:10px 24px 20px;border-bottom:1px solid var(--line);box-shadow:var(--shadow);
     }
     .nav.open a{padding:12px 0;width:100%;border-bottom:1px solid var(--line)}
@@ -334,7 +447,7 @@
     .hero-media{position:relative;width:100%;inset:auto;border-radius:16px;overflow:hidden}
     .hero-media img{height:340px}
     .hero-media::after{
-      background:linear-gradient(180deg,rgba(246,248,250,0) 55%,rgba(246,248,250,.35) 100%);
+      background:linear-gradient(180deg,rgba(var(--bg-rgb),0) 55%,rgba(var(--bg-rgb),.35) 100%);
     }
     .finder{grid-template-columns:repeat(2,1fr);transform:translateY(-24px)}
     .finder-field{border-right:0;border-bottom:1px solid var(--line)}
@@ -381,9 +494,6 @@
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="#top"><span class="brand-mark">H</span>HOSTLY</a>
-    <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
     <nav class="nav" id="nav">
       <a href="#services">Services</a>
       <a href="#event-friendly">Event-Friendly</a>
@@ -391,7 +501,21 @@
       <a href="#tenants">For Tenants</a>
       <a href="#contact">Contact</a>
     </nav>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark theme" aria-pressed="false">
+      <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+      <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+      </svg>
+    </button>
     <a class="btn btn-navy btn-pill header-cta" href="#contact">Get a free rental analysis</a>
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
 
@@ -651,7 +775,7 @@
       </div>
     </div>
 
-    <form class="form-card" data-done="Request sent — we'll be in touch">
+    <form class="form-card" data-form-type="tenant" data-done="Request sent — we'll be in touch">
       <div class="field-grid">
         <div class="field">
           <label for="t-name">Your name</label>
@@ -689,7 +813,7 @@
         </div>
         <div class="field full">
           <button class="btn btn-coral" type="submit">Send my request</button>
-          <p class="form-note">Sample contact form — connect it to your own workflow before going live.</p>
+          <p class="form-note">Your request goes straight to the Hostly team.</p>
         </div>
       </div>
     </form>
@@ -751,7 +875,7 @@
         <button class="tab" id="tab-question" type="button" role="tab" aria-selected="false" aria-controls="panel-question">Management question</button>
       </div>
 
-      <form class="form-card" id="panel-analysis" role="tabpanel" aria-labelledby="tab-analysis" data-done="Thanks — your analysis request is in">
+      <form class="form-card" id="panel-analysis" role="tabpanel" aria-labelledby="tab-analysis" data-form-type="analysis" data-done="Thanks — your analysis request is in">
         <div class="field-grid">
           <div class="field">
             <label for="a-name">Your name</label>
@@ -781,12 +905,12 @@
           </div>
           <div class="field full">
             <button class="btn btn-coral" type="submit">Request my free analysis</button>
-            <p class="form-note">Sample form only — no information is sent or stored.</p>
+            <p class="form-note">We'll follow up by email, usually within one business day.</p>
           </div>
         </div>
       </form>
 
-      <form class="form-card" id="panel-question" role="tabpanel" aria-labelledby="tab-question" data-done="Thanks — your question is on its way" hidden>
+      <form class="form-card" id="panel-question" role="tabpanel" aria-labelledby="tab-question" data-form-type="question" data-done="Thanks — your question is on its way" hidden>
         <div class="field-grid">
           <div class="field">
             <label for="q-name">Your name</label>
@@ -813,7 +937,7 @@
           </div>
           <div class="field full">
             <button class="btn btn-coral" type="submit">Send my question</button>
-            <p class="form-note">Sample form only — no information is sent or stored.</p>
+            <p class="form-note">We'll follow up by email, usually within one business day.</p>
           </div>
         </div>
       </form>
@@ -880,6 +1004,43 @@
 </footer>
 
 <script>
+  // ---- form backend config ----
+  // The tenant, rental-analysis, and management-question forms below POST
+  // here. Deploy apps-script/Code.gs as a Google Apps Script Web App (see
+  // the setup steps in that file) and paste the resulting /exec URL below —
+  // every submission then lands as a row in your Google Sheet and emails you.
+  // Until this is set, the forms show a reminder instead of pretending to send.
+  var HOSTLY_FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbz6m7aKgPdrd-D1GePicNracF4WkcaDfabgMVVH7_wwKIFUjjvgPjGnhU8SdIdo_RCuwg/exec';
+
+  // theme toggle — the head script has already applied the starting theme
+  var themeToggle = document.getElementById('themeToggle');
+  var root = document.documentElement;
+
+  function syncThemeButton() {
+    var dark = root.getAttribute('data-theme') === 'dark';
+    var label = dark ? 'Switch to light theme' : 'Switch to dark theme';
+    themeToggle.setAttribute('aria-label', label);
+    themeToggle.setAttribute('title', label);
+    themeToggle.setAttribute('aria-pressed', String(dark));
+  }
+  syncThemeButton();
+
+  themeToggle.addEventListener('click', function () {
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('hostly-theme', next); } catch (e) {}
+    syncThemeButton();
+  });
+
+  // keep following the OS until the visitor picks a theme themselves
+  try {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+      if (localStorage.getItem('hostly-theme')) return;
+      root.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+      syncThemeButton();
+    });
+  } catch (e) {}
+
   // mobile navigation
   var menuBtn = document.getElementById('menuBtn');
   var nav = document.getElementById('nav');
@@ -909,21 +1070,80 @@
     });
   });
 
-  // sample form feedback — nothing is submitted anywhere
-  document.querySelectorAll('form').forEach(function (form) {
+  // real form submissions — tenant enquiry, rental analysis, management
+  // question. Each POSTs to HOSTLY_FORM_ENDPOINT (a Google Apps Script Web
+  // App) which appends a row to a Sheet and emails a notification.
+  document.querySelectorAll('.form-card').forEach(function (form) {
+    var btn = form.querySelector('button[type="submit"]');
+    var note = form.querySelector('.form-note');
+    if (!btn) return;
+    var idleLabel = btn.textContent;
+    var idleNote = note ? note.textContent : '';
+    var resetTimer = null;
+
+    function setNote(text) { if (note) note.textContent = text; }
+    function restoreAfter(ms) {
+      clearTimeout(resetTimer);
+      resetTimer = setTimeout(function () {
+        btn.textContent = idleLabel;
+        setNote(idleNote);
+      }, ms);
+    }
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var btn = form.querySelector('button[type="submit"], .btn');
-      if (!btn) return;
-      var label = btn.textContent;
-      btn.textContent = form.dataset.done || 'Thanks — we\'ll be in touch';
+
+      if (!HOSTLY_FORM_ENDPOINT || HOSTLY_FORM_ENDPOINT.indexOf('PASTE_YOUR') === 0) {
+        setNote('Form isn’t connected yet — see apps-script/Code.gs to enable it.');
+        restoreAfter(4000);
+        return;
+      }
+
+      var data = {};
+      new FormData(form).forEach(function (value, key) { data[key] = value; });
+      data.formType = form.dataset.formType || 'unknown';
+
       btn.disabled = true;
-      setTimeout(function () { btn.textContent = label; btn.disabled = false; }, 2600);
+      btn.textContent = 'Sending…';
+      setNote('');
+
+      fetch(HOSTLY_FORM_ENDPOINT, {
+        method: 'POST',
+        // text/plain avoids a CORS preflight that Apps Script web apps can't answer
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(data)
+      })
+        .then(function (res) { return res.json(); })
+        .then(function (res) {
+          if (res.status !== 'ok') throw new Error(res.message || 'Unknown error');
+          btn.textContent = form.dataset.done || 'Thanks — we\'ll be in touch';
+          setNote('Received — thank you!');
+          form.reset();
+        })
+        .catch(function (err) {
+          btn.textContent = idleLabel;
+          setNote('Something went wrong — please email hello@yourhostlydomain.com directly.');
+          console.error('Hostly form submission failed:', err);
+        })
+        .finally(function () {
+          btn.disabled = false;
+          restoreAfter(5000);
+        });
     });
   });
 
-  // the hero finder is a visual sample — send the visitor to the tenant form
-  document.getElementById('finderForm').addEventListener('submit', function () {
+  // the hero finder is a visual sample only — no backend call, just a nudge
+  var finderForm = document.getElementById('finderForm');
+  var finderBtn = finderForm.querySelector('button[type="submit"]');
+  finderForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var label = finderBtn.textContent;
+    finderBtn.textContent = finderForm.dataset.done || label;
+    finderBtn.disabled = true;
+    setTimeout(function () {
+      finderBtn.textContent = label;
+      finderBtn.disabled = false;
+    }, 1400);
     document.getElementById('tenants').scrollIntoView({ behavior: 'smooth' });
   });
 

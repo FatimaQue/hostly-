@@ -12,10 +12,15 @@
  * ---------------------------------------------------------------------
  * 1. Create a new Google Sheet (sheets.new) — this becomes your
  *    submissions log. Give it a name, e.g. "Hostly submissions".
- * 2. In that Sheet: Extensions → Apps Script.
- * 3. Delete the placeholder "myFunction() {}" code and paste in this
- *    entire file.
- * 4. Change NOTIFY_EMAIL below to the address that should get notified.
+ * 2. Copy its ID out of the URL — the long string between /d/ and /edit:
+ *      https://docs.google.com/spreadsheets/d/THIS_PART_IS_THE_ID/edit
+ * 3. You can open Apps Script either from inside that Sheet (Extensions →
+ *    Apps Script) or standalone (script.new) — either works, because this
+ *    script opens the Sheet explicitly by ID rather than assuming it's
+ *    the "active" one. Delete the placeholder "myFunction() {}" code and
+ *    paste in this entire file.
+ * 4. Change NOTIFY_EMAIL below to the address that should get notified,
+ *    and SPREADSHEET_ID to the ID you copied in step 2.
  * 5. Click Deploy → New deployment.
  *      - Select type: Web app
  *      - Execute as: Me
@@ -40,6 +45,12 @@
  */
 
 var NOTIFY_EMAIL = 'hello@yourhostlydomain.com'; // <-- change this to your real inbox
+
+// The Sheet these submissions get written to. Works whether this script is
+// bound to a Sheet or standalone (Extensions > Apps Script vs script.new).
+// Get the ID from the sheet's URL — the long string between /d/ and /edit:
+//   https://docs.google.com/spreadsheets/d/THIS_PART_IS_THE_ID/edit
+var SPREADSHEET_ID = 'PASTE_YOUR_SPREADSHEET_ID_HERE';
 
 // Which sheet each form's rows land in. Keys must match the `formType`
 // value each form sends (set via data-form-type on the <form> in index.html).
@@ -78,7 +89,7 @@ function doGet() {
 }
 
 function getOrCreateSheet(name, data) {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
   var sheet = ss.getSheetByName(name);
   if (!sheet) {
     sheet = ss.insertSheet(name);

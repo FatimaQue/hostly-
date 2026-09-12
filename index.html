@@ -11,53 +11,53 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   /* ============================================================
-     MIDNIGHT ESTATE — the site's one permanent theme: warm charcoal
-     with a single champagne-gold accent standing in for what used
-     to be two separate teal/coral accents.
+     STEEL & COBALT — the site's permanent theme: cool neutral gray
+     with a single vivid cobalt-blue accent standing in for what
+     used to be two separate teal/coral accents.
      ============================================================ */
   :root{
     color-scheme:dark;
 
-    /* brand accent — one gold used everywhere teal or coral used to be */
-    --teal:#d4af6a;
-    --coral:#d4af6a;
+    /* brand accent — one cobalt blue used everywhere teal or coral used to be */
+    --teal:#4d7fff;
+    --coral:#4d7fff;
 
-    /* surfaces */
-    --surface:#0d0d0f;        /* body / header ground */
-    --bg:#08080a;             /* alt sections + hero ground */
-    --bg-rgb:8,8,10;          /* same colour, for the hero gradient fade */
-    --card:#17171a;           /* cards, menu button, tabs */
-    --input-bg:#131315;
-    --line:#28282c;
-    --line-strong:#38383d;
+    /* surfaces — a real silvery gray, not near-black */
+    --surface:#202327;        /* body / header ground */
+    --bg:#1c1f23;             /* alt sections + hero ground */
+    --bg-rgb:28,31,35;        /* same colour, for the hero gradient fade */
+    --card:#2a2e33;           /* cards, menu button, tabs */
+    --input-bg:#24272b;
+    --line:#3a3f45;
+    --line-strong:#4a5158;
 
     /* text */
-    --heading:#f5f2ea;
-    --ink:#e6e2d8;
-    --text-soft:#b5b0a3;
-    --muted:#8c8779;
-    --placeholder:#6b675c;
+    --heading:#f2f3f5;
+    --ink:#e2e4e7;
+    --text-soft:#b7bcc1;
+    --muted:#9aa0a6;
+    --placeholder:#767c82;
 
-    /* the darkest, bookending bands */
-    --utility-bg:#08080a;
-    --band-bg:#1c1917;
-    --footer-bg:#08080a;
+    /* still the darkest, bookending bands, but a step down in gray, not black */
+    --utility-bg:#17191c;
+    --band-bg:#24272b;
+    --footer-bg:#17191c;
 
-    /* primary button — filled gold, dark text */
-    --btn-primary-bg:#d4af6a;
-    --btn-primary-fg:#241d10;
-    --btn-primary-hover:#ddc084;
+    /* primary button — filled cobalt, white text */
+    --btn-primary-bg:#4d7fff;
+    --btn-primary-fg:#ffffff;
+    --btn-primary-hover:#6a94ff;
 
     /* accent washes */
-    --teal-soft:rgba(212,175,106,.14);
-    --coral-soft:rgba(212,175,106,.14);
-    --coral-line:rgba(212,175,106,.28);
-    --coral-text:#cbb98d;
-    --badge-bg:rgba(8,8,10,.88);
-    --badge-text:#f5f2ea;
-    --btn-accent-fg:#241d10;  /* text on the gold buttons */
+    --teal-soft:rgba(77,127,255,.14);
+    --coral-soft:rgba(77,127,255,.14);
+    --coral-line:rgba(77,127,255,.28);
+    --coral-text:#a9c0ff;
+    --badge-bg:rgba(28,31,35,.88);
+    --badge-text:#f2f3f5;
+    --btn-accent-fg:#ffffff;  /* text on the cobalt buttons */
 
-    /* stay-type colour-coding — gold stays the primary/default (short-term);
+    /* stay-type colour-coding — cobalt stays the primary/default (short-term);
        these two add variety to long-term and event-friendly touchpoints:
        badges, service-card numbers, chip tags, and the event band icons. */
     --sage:#7fae8c;
@@ -71,8 +71,8 @@
     --rose-text:#e0ac9e;
 
     --radius:14px;
-    --shadow:0 10px 30px rgba(0,0,0,.5);
-    --shadow-lg:0 24px 60px rgba(0,0,0,.65);
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+    --shadow-lg:0 24px 60px rgba(0,0,0,.45);
     --wrap:1200px;
   }
 
@@ -264,7 +264,7 @@
     font-size:12px;color:var(--text-soft);background:var(--bg);border:1px solid var(--line);
     padding:5px 10px;border-radius:6px;
   }
-  .chips.gold .chip{color:var(--teal);background:var(--teal-soft);border-color:rgba(212,175,106,.32)}
+  .chips.gold .chip{color:var(--teal);background:var(--teal-soft);border-color:rgba(77,127,255,.32)}
   .chips.sage .chip{color:var(--sage-text);background:var(--sage-soft);border-color:var(--sage-line)}
   .chips.rose .chip{color:var(--rose-text);background:var(--rose-soft);border-color:var(--rose-line)}
 
@@ -331,8 +331,8 @@
   .process-card{
     position:relative;overflow:hidden;border-radius:28px;padding:clamp(40px,6vw,64px) clamp(24px,5vw,56px);
     background:
-      radial-gradient(120% 140% at 12% -10%,rgba(212,175,106,.16),transparent 55%),
-      linear-gradient(135deg,var(--band-bg) 0%,#1f1b16 55%,#241e17 100%);
+      radial-gradient(120% 140% at 12% -10%,rgba(77,127,255,.16),transparent 55%),
+      linear-gradient(135deg,var(--band-bg) 0%,#2c3036 55%,#33373d 100%);
     border:1px solid var(--line);
   }
   .process-head{text-align:center;max-width:640px;margin:0 auto 56px}
@@ -591,26 +591,26 @@
       </article>
       <article class="svc">
         <div class="svc-no">05</div>
-        <h3>Rent collection &amp; owner reporting</h3>
-        <p>Consistent rent coordination and organized reporting to help owners stay informed.</p>
+        <h3>Tenant placement &amp; leasing</h3>
+        <p>Strategic marketing, guided showings, applicant vetting, and lease execution to secure long-term, reliable tenants.</p>
         <a class="more" href="#owners">Learn more <span>↗</span></a>
       </article>
       <article class="svc">
         <div class="svc-no">06</div>
-        <h3>Compliance &amp; documentation support</h3>
-        <p>Ongoing attention to lease documentation, notices, and record-keeping.</p>
+        <h3>Rent collection &amp; financial reporting</h3>
+        <p>Automated rent processing and detailed monthly statements to ensure consistent cash flow and full financial visibility.</p>
         <a class="more" href="#owners">Learn more <span>↗</span></a>
       </article>
       <article class="svc">
         <div class="svc-no">07</div>
-        <h3>Maintenance coordination</h3>
-        <p>Repair coordination using qualified service providers to address routine and urgent issues.</p>
+        <h3>Maintenance &amp; property care</h3>
+        <p>Prompt dispatch of vetted contractors for routine repairs and emergency issues to protect your asset's value.</p>
         <a class="more" href="#contact">Learn more <span>↗</span></a>
       </article>
       <article class="svc">
         <div class="svc-no">08</div>
-        <h3>Tenant placement &amp; leasing</h3>
-        <p>Marketing, property showings, application processing, and lease administration designed to support stable tenancies.</p>
+        <h3>Compliance &amp; legal documentation</h3>
+        <p>Comprehensive management of lease agreements, official notices, and regulatory record-keeping to minimize legal risk.</p>
         <a class="more" href="#owners">Learn more <span>↗</span></a>
       </article>
     </div>
@@ -812,23 +812,23 @@
       <div class="process-grid">
         <div class="process-step">
           <span class="process-step-badge">Step 1</span>
-          <h3>Consultation &amp; Review</h3>
-          <p>Learn about our property and management needs.</p>
+          <h3>Onboarding &amp; Strategy Planning</h3>
+          <p>We analyze your asset, establish competitive pricing, and align on your management goals.</p>
         </div>
         <div class="process-step">
           <span class="process-step-badge">Step 2</span>
-          <h3>Marketing &amp; Leasing</h3>
-          <p>Listings, showings, applications, and lease execution.</p>
+          <h3>Marketing &amp; Tenant Placement</h3>
+          <p>Targeted listings, seamless showings, thorough applicant vetting, and total lease coordination.</p>
         </div>
         <div class="process-step">
           <span class="process-step-badge">Step 3</span>
-          <h3>Ongoing Management</h3>
-          <p>Rent coordination, maintenance, and resident communication.</p>
+          <h3>Operations &amp; Resident Relations</h3>
+          <p>Automated rent collection, 24/7 maintenance dispatch, and proactive tenant support.</p>
         </div>
         <div class="process-step">
           <span class="process-step-badge">Step 4</span>
-          <h3>Reporting &amp; Oversight</h3>
-          <p>Clear updates and ongoing property monitoring.</p>
+          <h3>Analytics &amp; Financial Oversight</h3>
+          <p>Real-time owner reporting, expense tracking, and transparent performance metrics.</p>
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@
  * Hostly contact-form backend.
  *
  * Receives submissions from the tenant enquiry, rental-analysis, and
- * management-question forms on index.html, appends each one as a row in
+ * management-question forms on the Hostly website, appends each one as a row in
  * this spreadsheet (one sheet per form, created automatically), and emails
  * a notification to NOTIFY_EMAIL. No server, no paid service — this script
  * IS the backend.
@@ -33,8 +33,8 @@
  *    public-app review — it's still only accessible to you and whoever
  *    you deploy it for.
  * 7. Copy the Web app URL shown after deploying (it ends in /exec).
- * 8. Open index.html, find HOSTLY_FORM_ENDPOINT near the top of the
- *    <script> block, and paste that URL in as its value.
+ * 8. Open components/HostlyScript.tsx, find HOSTLY_FORM_ENDPOINT near the
+ *    top of the file, and paste that URL in as its value.
  * 9. Re-deploy this site. Submit each form once to confirm a row lands
  *    in the Sheet and the notification email arrives.
  *
@@ -44,7 +44,7 @@
  * ---------------------------------------------------------------------
  */
 
-var NOTIFY_EMAIL = 'hello@yourhostlydomain.com'; // <-- change this to your real inbox
+var NOTIFY_EMAIL = 'hostlyllc@gmail.com'; // all three forms notify this inbox
 
 // The Sheet these submissions get written to. Works whether this script is
 // bound to a Sheet or standalone (Extensions > Apps Script vs script.new).
